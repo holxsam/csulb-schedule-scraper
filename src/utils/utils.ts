@@ -1,20 +1,15 @@
 import path from "path";
-import fs from "fs";
-// import { MatchUps } from "./types";
+import fs from "fs-extra";
 
 export const outputToFile = (data: any, filename: string) => {
-  // // Create / overwrite empty json file for results.
-  // fs.closeSync(fs.openSync("./scripts/schedule.json", "w"));
   try {
     const stringifiedData = JSON.stringify(data);
-    const url = path.resolve(__dirname, filename);
+    const url = path.resolve(filename);
 
-    fs.writeFileSync(url, stringifiedData);
-    // fs.appendFileSync(path.resolve(__dirname, filename), stringifiedData);
+    fs.outputFileSync(url, stringifiedData);
 
     return url;
   } catch (err) {
-    console.error("Error writing into Json.");
-    // return "";
+    console.error("Error with outputToFile()");
   }
 };
