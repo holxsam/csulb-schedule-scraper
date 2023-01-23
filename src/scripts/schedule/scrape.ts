@@ -10,7 +10,6 @@ import {
 } from "./types";
 import { outputToFile } from "../../utils/utils";
 import {
-  formatAndFlattenData,
   generateSemYear,
   getCatalogLink,
   getTotalSectionsFromDepartment,
@@ -30,7 +29,7 @@ export const scrapeDepartmentsByUrl = (
     try {
       await page.$eval(".departmentTitle", (el) => el);
     } catch (e) {
-      resolve({ subject: "error", courses: [] });
+      resolve({ dept: "error", courses: [] });
       await page.close();
       return;
     }
@@ -41,7 +40,7 @@ export const scrapeDepartmentsByUrl = (
     //   (el) => el.textContent ?? ""
     // );
 
-    const subject = await page.$eval(
+    const dept = await page.$eval(
       ".departmentTitle",
       (el) => el.textContent ?? ""
     );
@@ -97,11 +96,11 @@ export const scrapeDepartmentsByUrl = (
       return allCourseSections;
     });
 
-    resolve({ subject, courses: rawCourseData });
+    resolve({ dept, courses: rawCourseData });
     await page.close();
   });
 
-export const scrapeSubjectLinks = async (
+export const scrapeDeptLinks = async (
   browser: Browser,
   semester?: Semester,
   year?: number
@@ -121,13 +120,13 @@ export const scrapeSubjectLinks = async (
     return [];
   }
 
-  const subjectLinks = await page.$$eval(".indexList > ul > li > a", (links) =>
+  const deptLinks = await page.$$eval(".indexList > ul > li > a", (links) =>
     links.map((el) => (el as HTMLAnchorElement).href ?? "n/a")
   );
 
   await page.close();
 
-  return subjectLinks;
+  return deptLinks;
 };
 
 export const scrapeTerm = async (
@@ -136,12 +135,12 @@ export const scrapeTerm = async (
   year: number
 ) => {
   console.log("=============================================================");
-  const subjectlinks = await scrapeSubjectLinks(browser, semester, year);
+  const deptlinks = await scrapeDeptLinks(browser, semester, year);
   console.log("=============================================================");
 
   const data: RawDepartment[] = [];
 
-  for (let link of subjectlinks) {
+  for (let link of deptlinks) {
     console.log("");
     console.log(pad("link"), link);
     const rawData = await scrapeDepartmentsByUrl(browser, link);
@@ -168,12 +167,7 @@ export const scrapeSchedules = async (
   for (let { semester, year } of terms) {
     const departments = await scrapeTerm(browser, semester, year);
     const rawData: TermSchedule = { semester, year, departments };
-    const parsedData = formatAndFlattenData(rawData);
-
-    const parsedPath = `./src/output/schedules/parsed/${year}_${semester}.json`;
     const rawPath = `./src/output/schedules/raw/RAW_${year}_${semester}.json`;
-
-    outputToFile(parsedData, parsedPath);
     outputToFile(rawData, rawPath);
   }
 

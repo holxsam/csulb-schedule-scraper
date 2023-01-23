@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scrape": "ts-node ./src/index.ts",
-    "database": "ts-node ./src/scripts/database.ts",
-    "zzz": "ts-node ./src/utils/start.ts"
+    "scrape": "ts-node ./src/scrape.ts",
+    "parse": "ts-node ./src/parse.ts",
+    "analysis": "ts-node ./src/analysis.ts",
+    "database": "ts-node ./src/database.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^11.1.0",
+    "nanoid": "^4.0.0",
     "puppeteer": "^19.4.1"
   },
   "devDependencies": {
