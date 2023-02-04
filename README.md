@@ -23,7 +23,7 @@ can be used to get a feel for the data so that we can parse the raw data more ef
 
 ### Prepare the data:
 
-1. `npm run database` to generate a .csv file of all the data.
+1. `npm run database` to generate a .csv file of all the data. This data is stored in `./src/output/schedules/all` by default.
 
 ### Bulk load the data:
 

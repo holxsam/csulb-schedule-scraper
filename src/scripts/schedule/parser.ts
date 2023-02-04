@@ -15,6 +15,7 @@ import {
   isSectionType,
   validClassDays,
   ValidSectionKey,
+  TimeInfo,
 } from "./types";
 
 export const removeLetters = (str: string) => str.replace(/\D/g, "");
@@ -182,23 +183,49 @@ export const parseDays = (str: string): ClassDay[] => {
   return validClassDays.filter((day) => daysStr.includes(day));
 };
 
+const getDefaultH12_NA = (): TimeInfo["h12"] => ({
+  hour: -1,
+  minute: -1,
+  meridiem: "am",
+});
+
+const getDefaultH12_TBA = (): TimeInfo["h12"] => ({
+  hour: 0,
+  minute: 0,
+  meridiem: "am",
+});
+
+const getDefaultH24_NA = (): TimeInfo["h24"] => ({
+  hour: -1,
+  minute: -1,
+  rawMinutes: -1,
+});
+
+const getDefaultH24_TBA = (): TimeInfo["h24"] => ({
+  hour: 0,
+  minute: 0,
+  rawMinutes: 0,
+});
+
 export const safeParseTime = (raw_time: string) => {
   let time: ClassTime;
 
   try {
     time = parseTime(raw_time);
   } catch (e) {
+    const rawTime = raw_time.toLowerCase();
+    const isNA = rawTime.includes("na");
     time = {
       rawStrRange: raw_time,
       start: {
         rawStr: "error",
-        h12: { hour: 0, minute: 0, meridiem: "am" },
-        h24: { hour: 0, minute: 0, rawMinutes: 0 },
+        h12: isNA ? getDefaultH12_NA() : getDefaultH12_TBA(),
+        h24: isNA ? getDefaultH24_NA() : getDefaultH24_TBA(),
       },
       end: {
         rawStr: "error",
-        h12: { hour: 0, minute: 0, meridiem: "am" },
-        h24: { hour: 0, minute: 0, rawMinutes: 0 },
+        h12: isNA ? getDefaultH12_NA() : getDefaultH12_TBA(),
+        h24: isNA ? getDefaultH24_NA() : getDefaultH24_TBA(),
       },
     };
   }

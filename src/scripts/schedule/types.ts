@@ -12,7 +12,17 @@ export const validSectionTypes = [
   // and they represent an additional section LINKED to another section
   // hence the "add".
 ] as const;
-export const validClassDays = ["m", "tu", "w", "th", "f", "sa"] as const;
+export const validClassDays = [
+  "su",
+  "m",
+  "tu",
+  "w",
+  "th",
+  "f",
+  "sa",
+  "na",
+  "tba",
+] as const;
 export const validSectionKeys = [
   "section_number",
   "class_number",

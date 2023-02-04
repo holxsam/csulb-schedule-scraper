@@ -105,17 +105,14 @@ export const analyzeDatabaseLengths = (data: DatabaseClassSection[]) => {
 };
 
 export const analyzeParsedData = () => {
-  const data = getParsedData();
-
-  const dbData = convertParsedDataToDatabaseForm(data);
-
+  // const data = getParsedData();
+  // const dbData = convertParsedDataToDatabaseForm(data);
   // const sectionTypes = data.map(({ section_type }) => section_type);
   // const uniqueSectionTypes = [...new Set(sectionTypes)];
   // outputToFile(
   //   uniqueSectionTypes,
   //   path.join(dataSrcURL, "unique-section_types.json")
   // );
-
   // const emptySectionTypes = data.filter(
   //   ({ section_type }) => section_type === ""
   // );
@@ -123,36 +120,76 @@ export const analyzeParsedData = () => {
   //   emptySectionTypes,
   //   path.join(dataSrcURL, "empty_section_type.json")
   // );
-
   // const comments = emptySectionTypes.map((v) => v.comment);
   // const uniqueComments = [...new Set(comments)];
   // outputToFile(uniqueComments, path.join(dataSrcURL, "unique-comments.json"));
-
   // const commentLengths = data.map((v) => v.comment.length);
   // const uniqueComments = [...new Set(commentLengths)];
   // const maxCommentLength = Math.max(...uniqueComments);
   // console.log(maxCommentLength);
-
   // const uniqueComments = [...new Set(dept_abbr_lengths)];
   // const maxCommentLength = Math.max(...uniqueComments);
   // console.log(maxCommentLength);
-
   // const d = data.filter((v) => v.comment.length > 600);
   // console.log(d);
-
   // console.log(analyzeDatabaseLengths(dbData));
-
   // console.log(data.length); // 250411
-
   // console.log(
   //   data.filter((i) => i.comment.includes("CNSM permission required"))
   // );
-  const days = data.flatMap((v) => {
-    return v.days.map((d) => d);
-  });
-  const uniqueDays = [...new Set(days)];
-  // const maxCommentLength = Math.max(...uniqueDays);
-  console.log(uniqueDays);
-
-  // outputToFile(()=>)
+  // const days = data.flatMap((v) => {
+  //   return v.days.map((d) => d);
+  // });
+  // const uniqueDays = [...new Set(days)];
+  // console.log(uniqueDays);
+  // -------------------------------------------------------------------------------
+  // const raw = getRawData();
+  // const valuesForTheKeyDays = raw.flatMap((term) =>
+  //   term.departments.flatMap((dept) =>
+  //     dept.courses.flatMap((course) =>
+  //       course.groups.flatMap((group) =>
+  //         group.sections.flatMap((cols) => {
+  //           const piece = cols.find((col) =>
+  //             col.raw_key.toLowerCase().includes("day")
+  //           );
+  //           if (piece) return piece.value;
+  //           return "NOTHING";
+  //         })
+  //       )
+  //     )
+  //   )
+  // );
+  // const uniqueValuesForTheKeyDays = [...new Set(valuesForTheKeyDays)];
+  // outputToFile(
+  //   uniqueValuesForTheKeyDays,
+  //   path.join(dataSrcURL, "uniqueValuesForTheKeyDays.json")
+  // );
+  // -------------------------------------------------------------------------------
+  // const raw = getRawData();
+  // const valuesForTheKeyTime = raw.flatMap((term) =>
+  //   term.departments.flatMap((dept) =>
+  //     dept.courses.flatMap((course) =>
+  //       course.groups.flatMap((group) =>
+  //         group.sections.flatMap((cols) => {
+  //           const piece = cols.find((col) =>
+  //             col.raw_key.toLowerCase().includes("time")
+  //           );
+  //           if (piece) return piece.value;
+  //           return "NOTHING";
+  //         })
+  //       )
+  //     )
+  //   )
+  // );
+  // const uniqueValuesForTheKeyTime = [...new Set(valuesForTheKeyTime)]
+  //   // don't use this filter if you want to see the ranges of time
+  //   .filter((v) => {
+  //     const value = v.toLowerCase();
+  //     return !(value.includes("am") || value.includes("pm"));
+  //   });
+  // outputToFile(
+  //   uniqueValuesForTheKeyTime,
+  //   path.join(dataSrcURL, "uniqueValuesForTheKeyTime.json")
+  // );
+  // -------------------------------------------------------------------------------
 };
